@@ -682,7 +682,12 @@
          * or an empty array if no rows were returned.
          * @return array
          */
-        public function find_array() {
+        public function find_array( $id = null ) {
+
+            if ( $id !== null ) {
+
+                $this->where( $this->_get_id_column_name(), $id );
+            }
             return $this->_run();
         }
 

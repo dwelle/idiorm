@@ -2127,13 +2127,31 @@
         /**
          * Delete this record from the database
          */
-        public function delete() {
+        public function delete( $id = null ) {
+
             $query = array(
                 "DELETE FROM",
                 $this->_quote_identifier($this->_table_name)
             );
+
             $this->_add_id_column_conditions($query);
-            return self::_execute(join(" ", $query), is_array($this->id(true)) ? array_values($this->id(true)) : array($this->id(true)), $this->_connection_name);
+
+            if ( $id !== null ) {
+
+                return self::_execute(
+
+                    join(" ", $query),
+                    is_array( $id ) ? array_values( $id ) : array( $id ),
+                    $this->_connection_name
+                );
+            } else {
+
+                return self::_execute(
+                    join(" ", $query),
+                    is_array($this->id(true)) ? array_values($this->id(true)) : array($this->id(true)),
+                    $this->_connection_name
+                );
+            }
         }
 
         /**
